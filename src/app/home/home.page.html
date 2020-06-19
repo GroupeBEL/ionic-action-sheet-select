@@ -14,7 +14,20 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <strong>Bug Reproduction</strong>
+    <form [formGroup]="form" (ngSubmit)="getFormData()">
+      <ion-item style="margin-bottom:30px;">
+        <ion-label>Time</ion-label>
+        <ion-select interface="action-sheet" color="primary" formControlName="canteen" (ionChange)="changeTime()" (ionCancel)="onCancel()" class="ion-text-wrap" style="max-width: 100%">
+          <ion-select-option [value]="noCantine">Not going</ion-select-option>
+          <ion-select-option *ngFor="let time of crns" value="{{time.idct}}" [disabled]="time.subs===0">
+            <span [ngClass]="{
+            'ion-select-red': time.subs<=10 ,
+            'ion-select-green': time.subs>10
+          }">{{time.creneau}} ({{time.subs}} Free places)</span>  <!-- class not working neither in span or in ion-select-option (feels bad can't change style) https://github.com/ionic-team/ionic/issues/18067-->
+        </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </form>
   </div>
 </ion-content>
